@@ -30,7 +30,7 @@ class FileStorage:
 
     def all(self):
         """Returns the dictionary __objects."""
-        return self.__objects
+        return FileStorage.__objects
 
     def new(self, obj):
         """Adds a new object to the __objects dictionary.
@@ -39,26 +39,26 @@ class FileStorage:
             obj: The object to be added.
         """
         key = "{}.{}".format(obj.__class__.__name__, obj.id)
-        self.__objects[key] = obj
+        FileStorage.__objects[key] = obj
 
     def save(self):
         """Serializes __objects to the JSON file __file_path."""
 
         dict_to_json = {}
-        for key, value in self.__objects.items():
+        for key, value in FileStorage.__objects.items():
             dict_to_json[key] = value.to_dict()
-            with open(self.__file_path, 'w') as json_file:
+            with open(FileStorage.__file_path, 'w') as json_file:
                 json.dump(dict_to_json, json_file)
 
     def reload(self):
         """Deserialize the JSON file __file_path to __objects, if it exists."""
         try:
-            with open(self.__file_path, 'r') as json_file:
+            with open(FileStorage.__file_path, 'r') as json_file:
                 dic_obj = json.load(json_file)
                 for key, value in dic_obj.items():
                     class_name = key.split(".")[0]
                     if class_name in allw_cls:
-                        self.__objects[key] = eval(class_name)(**value)
+                        FileStorage.__objects[key] = eval(class_name)(**value)
                     else:
                         pass
         except FileNotFoundError:
