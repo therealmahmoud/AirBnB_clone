@@ -12,10 +12,6 @@ from models.state import State
 from models.review import Review
 
 
-allw_cls = {"BaseModel": BaseModel, "User": User, "Place": Place,
-            "State": State, "City": City, "Amenity": Amenity, "Review": Review}
-
-
 class FileStorage:
     """Serializes instances to a
     JSON file and deserializes JSON file to instances.
@@ -55,11 +51,9 @@ class FileStorage:
         try:
             with open(FileStorage.__file_path, 'r') as json_file:
                 dic_obj = json.load(json_file)
-                for key, value in dic_obj.items():
-                    class_name = key.split(".")[0]
-                    if class_name in allw_cls:
-                        FileStorage.__objects[key] = eval(class_name)(**value)
-                    else:
-                        pass
+                for value in dic_obj.values():
+                    class_name = value["__class__"]
+                    del value["__class__"]
+                    self.new(eval(class_name)(**value))
         except FileNotFoundError:
             return
