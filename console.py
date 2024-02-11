@@ -2,6 +2,7 @@
 """Class HBNBComand a program called console.py
 """
 import re
+from shlex import split
 import cmd
 from models.base_model import BaseModel
 from models.user import User
@@ -89,42 +90,44 @@ class HBNBCommand(cmd.Cmd):
             print("** no instance found **")
 
     def do_destroy(self, args):
-        """ Deletes an instance based on the class name and id """
+        """
+        Delete a specified instance.
+
+        Usage: destroy <class_name> <instance_id>
+        """
+
         args = args.split()
-        if not args:
+        if len(args) == 0:
             print("** class name missing **")
-            return
-        elif len(args) < 2:
-            print("** instance id missing **")
-            return
-        if args[0] not in allw_cls:
+        elif args[0] not in allw_cls:
             print("** class doesn't exist **")
-            return
-        for k, v in storage.all().items():
-            if args[1] == v.id:
-                del storage.all()[k]
-                storage.save()
-                return
-        print("** no instance found **")
+        elif len(args) != 2:
+            print("** instance id missing **")
+        else:
+            for key, value in storage.all().items():
+                if args[1] == value.id:
+                    del storage.all()[key]
+                    storage.save()
+                    return
+            print("** no instance found **")
 
     def do_all(self, args):
-        """
-        Display all instances of a specified class or all classes.
-
-        Usage: all [<class_name>]
-        """
-
-        args = args.split()
-        if len(args) > 0 and args[0] not in allw_cls:
-            print("** class doesn't exist **")
-            return
-        insList = []
-        for key, value in storage.all().items():
-            if len(args) > 0 and args[0] == value.__class__.__name__:
-                insList.append(value.__str__())
-            elif len(args) == 0:
-                insList.append(value.__str__())
-        print(insList)
+        """ Prints all str representation of all instances """
+        split_args = split(args)
+        n_list = []
+        dict_json = storage.all()
+        if args:
+            try:
+                for key in storage.all():
+                    if split_args[0] == key.split('.')[0]:
+                        n_list.append(str(dict_json[key]))
+                print(n_list)
+            except Exception:
+                print("** class doesn't exist **")
+        else:
+            for key in storage.all():
+                n_list.append(str(storage.all()[key]))
+            print(n_list)
 
     def do_count(self, args):
         """
