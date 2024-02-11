@@ -120,14 +120,14 @@ class HBNBCommand(cmd.Cmd):
         args = args.split()
         if len(args) > 0 and args[0] not in allw_cls:
             print("** class doesn't exist **")
-            return
-        insList = []
-        for key, value in storage.all().items():
-            if len(args) > 0 and args[0] == value.__class__.__name__:
-                insList.append(value.__str__())
-            elif len(args) == 0:
-                insList.append(value.__str__())
-        print(insList)
+        else :
+            insList = []
+            for key, value in storage.all().items():
+                if len(args) > 0 and args[0] == value.__class__.__name__:
+                    insList.append(value.__str__())
+                elif len(args) == 0:
+                    insList.append(value.__str__())
+            print(insList)
 
     def do_count(self, args):
         """
