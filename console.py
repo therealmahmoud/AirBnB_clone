@@ -2,7 +2,6 @@
 """Class HBNBComand a program called console.py
 """
 import re
-from shlex import split
 import cmd
 from models.base_model import BaseModel
 from models.user import User
@@ -69,25 +68,21 @@ class HBNBCommand(cmd.Cmd):
             print(instan.id)
 
     def do_show(self, args):
-        """
-        Display information of a specified instance.
-
-        Usage: show <class_name> <instance_id>
-        """
-
-        args = args.split()
-        if len(args) == 0:
+        """ Prints str representation of an instance """
+        if not (args):
             print("** class name missing **")
-        elif args[0] not in allw_cls:
-            print("** class doesn't exist **")
-        elif len(args) != 2:
-            print("** instance id missing **")
         else:
-            for value in storage.all().values():
-                if args[1] == value.id:
-                    print(value)
-                    return
-            print("** no instance found **")
+            args = args.split()
+            if len(args) != 2:
+                print("** instance id missing **")
+            elif args[0] not in allw_cls:
+                print("** class doesn't exist **")
+            else:
+                for k, v in storage.all().items():
+                    if args[1] == v.id:
+                        print(v)
+                        return
+                print("** no instance found **")
 
     def do_destroy(self, args):
         """
@@ -112,22 +107,23 @@ class HBNBCommand(cmd.Cmd):
             print("** no instance found **")
 
     def do_all(self, args):
-        """ Prints all str representation of all instances """
-        split_args = split(args)
-        n_list = []
-        dict_json = storage.all()
-        if args:
-            try:
-                for key in storage.all():
-                    if split_args[0] == key.split('.')[0]:
-                        n_list.append(str(dict_json[key]))
-                print(n_list)
-            except Exception:
-                print("** class doesn't exist **")
-        else:
-            for key in storage.all():
-                n_list.append(str(storage.all()[key]))
-            print(n_list)
+        """
+        Display all instances of a specified class or all classes.
+
+        Usage: all [<class_name>]
+        """
+
+        args = args.split()
+        if len(args) > 0 and args[0] not in allw_cls:
+            print("** class doesn't exist **")
+            return
+        insList = []
+        for key, value in storage.all().items():
+            if len(args) > 0 and args[0] == value.__class__.__name__:
+                insList.append(value.__str__())
+            elif len(args) == 0:
+                insList.append(value.__str__())
+        print(insList)
 
     def do_count(self, args):
         """
