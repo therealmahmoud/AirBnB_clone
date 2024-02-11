@@ -57,22 +57,17 @@ class HBNBCommand(cmd.Cmd):
         return True
 
     def do_create(self, class_name):
-        """
-        Create a new instance of a specified class.
-
-        Usage: create <class_name>
-        """
-
-        if len(class_name) == 0:
+        """ Creates a new instance """
+        if not (class_name):
             print("** class name missing **")
         elif class_name not in HBNBCommand.__allw_cls:
             print("** class doesn't exist **")
         else:
-            instan = eval(class_name)()
-            instan.save()
-            print(instan.id)
+            instance = eval[class_name]()
+            instance.save()
+            print(instance.id)
 
-    def do_show(self, args):
+    def do_show(self, class_name):
         """
         Display information of a specified instance.
 
