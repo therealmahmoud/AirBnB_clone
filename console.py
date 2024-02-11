@@ -13,20 +13,20 @@ from models.review import Review
 from models import storage
 
 
-allw_cls = {
-        "BaseModel",
-        "User",
-        "State",
-        "City",
-        "Place",
-        "Amenity",
-        "Review"
-    }
 
 
 class HBNBCommand(cmd.Cmd):
     """Command line for the airbnb
     """
+    __allw_cls = {
+            "BaseModel",
+            "User",
+            "State",
+            "City",
+            "Place",
+            "Amenity",
+            "Review"
+        }
 
     prompt = '(hbnb) '
 
@@ -67,7 +67,7 @@ class HBNBCommand(cmd.Cmd):
 
         if len(class_name) == 0:
             print("** class name missing **")
-        elif class_name not in allw_cls:
+        elif class_name not in HBNBCommand.__allw_cls:
             print("** class doesn't exist **")
         else:
             instan = eval(class_name)()
@@ -84,7 +84,7 @@ class HBNBCommand(cmd.Cmd):
         args = args.split()
         if len(args) == 0:
             print("** class name missing **")
-        elif args[0] not in allw_cls:
+        elif args[0] not in HBNBCommand.__allw_cls:
             print("** class doesn't exist **")
         elif len(args) != 2:
             print("** instance id missing **")
@@ -105,7 +105,7 @@ class HBNBCommand(cmd.Cmd):
         args = args.split()
         if len(args) == 0:
             print("** class name missing **")
-        elif args[0] not in allw_cls:
+        elif args[0] not in HBNBCommand.__allw_cls:
             print("** class doesn't exist **")
         elif len(args) != 2:
             print("** instance id missing **")
@@ -125,7 +125,7 @@ class HBNBCommand(cmd.Cmd):
         """
 
         args = args.split()
-        if len(args) > 0 and args[0] not in allw_cls:
+        if len(args) > 0 and args[0] not in HBNBCommand.__allw_cls:
             print("** class doesn't exist **")
         else:
             insList = []
@@ -158,7 +158,7 @@ class HBNBCommand(cmd.Cmd):
         args = args.split()
         if len(args) == 0:
             print("** class name missing **")
-        elif args[0] not in allw_cls:
+        elif args[0] not in HBNBCommand.__allw_cls:
             print("** class doesn't exist **")
         elif len(args) < 2:
             print("** instance id missing **")
