@@ -51,38 +51,37 @@ class HBNBCommand(cmd.Cmd):
         """ Quit command to exit the program. """
         return True
 
-    def do_create(self, class_name):
-        """
-        Create a new instance of a specified class.
-
-        Usage: create <class_name>
-        """
-
-        if len(class_name) == 0:
-            print("** class name missing **")
-        elif class_name not in allw_cls:
-            print("** class doesn't exist **")
-        else:
-            instan = eval(class_name)()
-            instan.save()
-            print(instan.id)
-
-    def do_show(self, args):
-        """ Prints str representation of an instance """
+    def do_create(self, args):
+        """ Creates a new instance """
         if not (args):
             print("** class name missing **")
+        elif args not in HBNBCommand.classes:
+            print("** class doesn't exist **")
         else:
-            args = args.split()
-            if len(args) != 2:
-                print("** instance id missing **")
-            elif args[0] not in allw_cls:
-                print("** class doesn't exist **")
-            else:
-                for k, v in storage.all().items():
-                    if args[1] == v.id:
-                        print(v)
-                        return
-                print("** no instance found **")
+            instance = eval[args]()
+            instance.save()
+            print(instance.id)
+
+    def do_show(self, args):
+        """
+        Display information of a specified instance.
+
+        Usage: show <class_name> <instance_id>
+        """
+
+        args = args.split()
+        if len(args) == 0:
+            print("** class name missing **")
+        elif args[0] not in allw_cls:
+            print("** class doesn't exist **")
+        elif len(args) != 2:
+            print("** instance id missing **")
+        else:
+            for value in storage.all().values():
+                if args[1] == value.id:
+                    print(value)
+                    return
+            print("** no instance found **")
 
     def do_destroy(self, args):
         """
