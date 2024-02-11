@@ -89,26 +89,23 @@ class HBNBCommand(cmd.Cmd):
             print("** no instance found **")
 
     def do_destroy(self, args):
-        """
-        Delete a specified instance.
-
-        Usage: destroy <class_name> <instance_id>
-        """
-
+        """ Deletes an instance based on the class name and id """
         args = args.split()
-        if len(args) == 0:
+        if not args:
             print("** class name missing **")
-        elif args[0] not in allw_cls:
-            print("** class doesn't exist **")
-        elif len(args) != 2:
+            return
+        elif len(args) < 2:
             print("** instance id missing **")
-        else:
-            for key, value in storage.all().items():
-                if args[1] == value.id:
-                    del storage.all()[key]
-                    storage.save()
-                    return
-            print("** no instance found **")
+            return
+        if args[0] not in allw_cls:
+            print("** class doesn't exist **")
+            return
+        for k, v in storage.all().items():
+            if args[1] == v.id:
+                del storage.all()[k]
+                storage.save()
+                return
+        print("** no instance found **")
 
     def do_all(self, args):
         """
@@ -141,29 +138,33 @@ class HBNBCommand(cmd.Cmd):
         print(c_instance)
 
     def do_update(self, args):
-        """ Updates an instance based on the class name and id """
+        """
+        Update attributes of a specified instance.
+
+        Usage: update <class_name> <instance_id> <attribute_name>
+        "<attribute_value>"
+        """
+
         args = args.split()
         if len(args) == 0:
             print("** class name missing **")
-            return False
-        if args[0] in allw_cls:
-            if len(args) > 1:
-                key = args[0] + '.' + args[1]
-                if key in storage.all():
-                    if len(args) > 2:
-                        if len(args) > 3:
-                            setattr(storage.all()[key], args[2], args[3])
-                            storage.all()[key].save()
-                        else:
-                            print("** value missing **")
-                    else:
-                        print("** attribute name missing **")
-                else:
-                    print("** no instance found **")
-            else:
-                print("** instance id missing **")
-        else:
+        elif args[0] not in allw_cls:
             print("** class doesn't exist **")
+        elif len(args) < 2:
+            print("** instance id missing **")
+        elif len(args) < 3:
+            print("** attribute name missing **")
+        elif len(args) < 4:
+            print("** value missing **")
+        elif len(args) > 4:
+            return
+        else:
+            for value in storage.all().values():
+                if args[1] == value.id:
+                    setattr(value, args[2], args[3])
+                    storage.save()
+                    return
+            print("** no instance found **")
 
 
 if __name__ == '__main__':
