@@ -51,16 +51,21 @@ class HBNBCommand(cmd.Cmd):
         """ Quit command to exit the program. """
         return True
 
-    def do_create(self, args):
-        """ Creates a new instance """
-        if not (args):
+    def do_create(self, class_name):
+        """
+        Create a new instance of a specified class.
+
+        Usage: create <class_name>
+        """
+
+        if len(class_name) == 0:
             print("** class name missing **")
-        elif args not in HBNBCommand.classes:
+        elif class_name not in allw_cls:
             print("** class doesn't exist **")
         else:
-            instance = eval[args]()
-            instance.save()
-            print(instance.id)
+            instan = eval(class_name)()
+            instan.save()
+            print(instan.id)
 
     def do_show(self, args):
         """
