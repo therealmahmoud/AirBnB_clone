@@ -1,8 +1,7 @@
 #!/usr/bin/python3
 """Class HBNBComand a program called console.py
 """
-import json
-import re
+
 import cmd
 from models.base_model import BaseModel
 from models.user import User
