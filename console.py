@@ -32,7 +32,6 @@ def parse(arg):
         return retl
 
 
-
 allw_cls = {"BaseModel": BaseModel, "User": User, "Place": Place,
             "State": State, "City": City, "Amenity": Amenity, "Review": Review}
 
@@ -208,7 +207,6 @@ class HBNBCommand(cmd.Cmd):
                 else:
                     obj.__dict__[k] = v
         storage.save()
-
 
 
 if __name__ == '__main__':
