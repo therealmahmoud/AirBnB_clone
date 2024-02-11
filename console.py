@@ -122,7 +122,7 @@ class HBNBCommand(cmd.Cmd):
             print("** class doesn't exist **")
         else :
             insList = []
-            for key, value in storage.all().items():
+            for value in storage.all().values():
                 if len(args) > 0 and args[0] == value.__class__.__name__:
                     insList.append(value.__str__())
                 elif len(args) == 0:
