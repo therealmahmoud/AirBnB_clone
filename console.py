@@ -2,6 +2,8 @@
 """Class HBNBComand a program called console.py
 """
 
+import re
+from shlex import split
 import cmd
 from models.base_model import BaseModel
 from models.user import User
@@ -11,6 +13,24 @@ from models.amenity import Amenity
 from models.state import State
 from models.review import Review
 from models import storage
+
+
+def parse(arg):
+    curly_braces = re.search(r"\{(.*?)\}", arg)
+    brackets = re.search(r"\[(.*?)\]", arg)
+    if curly_braces is None:
+        if brackets is None:
+            return [i.strip(",") for i in split(arg)]
+        else:
+            lexer = split(arg[:brackets.span()[0]])
+            retl = [i.strip(",") for i in lexer]
+            retl.append(brackets.group())
+            return retl
+    else:
+        lexer = split(arg[:curly_braces.span()[0]])
+        retl = [i.strip(",") for i in lexer]
+        retl.append(curly_braces.group())
+        return retl
 
 
 class HBNBCommand(cmd.Cmd):
@@ -57,20 +77,17 @@ class HBNBCommand(cmd.Cmd):
         return True
 
     def do_create(self, class_name):
+        """Usage: create <class>
+        Create a new class instance and print its id.
         """
-        Create a new instance of a specified class.
-
-        Usage: create <class_name>
-        """
-
-        if len(class_name) == 0:
+        argl = parse(class_name)
+        if len(argl) == 0:
             print("** class name missing **")
-        elif class_name not in HBNBCommand.__allw_cls:
+        elif argl[0] not in HBNBCommand.__classes:
             print("** class doesn't exist **")
         else:
-            instan = eval(class_name)()
-            instan.save()
-            print(instan.id)
+            print(eval(argl[0])().id)
+            storage.save()
 
     def do_show(self, args):
         """
