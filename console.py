@@ -13,8 +13,15 @@ from models.review import Review
 from models import storage
 
 
-allw_cls = {"BaseModel": BaseModel, "User": User, "Place": Place,
-            "State": State, "City": City, "Amenity": Amenity, "Review": Review}
+allw_cls = {
+        "BaseModel",
+        "User",
+        "State",
+        "City",
+        "Place",
+        "Amenity",
+        "Review"
+    }
 
 
 class HBNBCommand(cmd.Cmd):
@@ -120,7 +127,7 @@ class HBNBCommand(cmd.Cmd):
         args = args.split()
         if len(args) > 0 and args[0] not in allw_cls:
             print("** class doesn't exist **")
-        else :
+        else:
             insList = []
             for value in storage.all().values():
                 if len(args) > 0 and args[0] == value.__class__.__name__:
