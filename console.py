@@ -67,7 +67,7 @@ class HBNBCommand(cmd.Cmd):
             instance.save()
             print(instance.id)
 
-    def do_show(self, class_name):
+    def do_show(self, args):
         """
         Display information of a specified instance.
 
