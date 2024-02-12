@@ -115,7 +115,7 @@ class TestState_to_dict(unittest.TestCase):
         st.my_number = 98
         self.assertEqual("Holberton", st.middle_name)
         self.assertIn("my_number", st.to_dict())
-    
+
     def test_to_dictct_keys(self):
         st = State()
         self.assertIn("id", st.to_dict())
