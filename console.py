@@ -68,8 +68,8 @@ class HBNBCommand(cmd.Cmd):
         elif class_name not in HBNBCommand.__allw_cls:
             print("** class doesn't exist **")
         else:
-            instan = eval(class_name)()
-            print(instan.id)
+            instan = (eval(class_name)().id)
+            print(instan)
             instan.save()
 
     def do_show(self, args):
