@@ -23,7 +23,6 @@ from models.review import Review
 class TestFileStorage_inSt(unittest.TestCase):
     """Unittests for testing instantiation of the FileStorage class."""
 
-
     def testFileStorage_objectsPrivatediCt(self):
         self.assertEqual(dict, type(FileStorage._FileStorage__objects))
 
@@ -39,6 +38,7 @@ class TestFileStorage_inSt(unittest.TestCase):
 
     def test_FileStorage_No_Args(self):
         self.assertEqual(type(FileStorage()), FileStorage)
+
 
 class TestFileStorage_methds(unittest.TestCase):
     """Unittests for testing methods of the FileStorage class."""
@@ -84,7 +84,8 @@ class TestFileStorage_methds(unittest.TestCase):
         models.storage.new(CitY)
         models.storage.new(AmenItyy)
         models.storage.new(REview)
-        self.assertIn("BaseModel." + Basemodell.id, models.storage.all().keys())
+        self.assertIn("BaseModel." + Basemodell.id,
+                      models.storage.all().keys())
         self.assertIn(Basemodell, models.storage.all().values())
         self.assertIn("User." + us.id, models.storage.all().keys())
         self.assertIn(us, models.storage.all().values())
