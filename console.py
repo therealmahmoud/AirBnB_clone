@@ -79,19 +79,18 @@ class HBNBCommand(cmd.Cmd):
         Usage: show <class_name> <instance_id>
         """
 
+        storage_dict = storage.all()
         args = args.split()
         if len(args) == 0:
             print("** class name missing **")
         elif args[0] not in HBNBCommand.__allw_cls:
             print("** class doesn't exist **")
-        elif len(args) != 2:
+        elif len(args) == 1:
             print("** instance id missing **")
-        else:
-            for value in storage.all().values():
-                if args[1] == value.id:
-                    print(value)
-                    return
+        elif "{}.{}".format(args[0], args[1]) not in storage_dict:
             print("** no instance found **")
+        else:
+            print(storage_dict["{}.{}".format(args[0], args[1])])
 
     def do_destroy(self, args):
         """Usage: destroy <class> <id> or <class>.destroy(<id>)
