@@ -17,13 +17,13 @@ class HBNBCommand(cmd.Cmd):
     """Command line for the airbnb
     """
     __allw_cls = {
-            "BaseModel",
-            "User",
-            "State",
-            "City",
-            "Place",
-            "Amenity",
-            "Review"
+            "BaseModel": BaseModel,
+            "User": User,
+            "State": State,
+            "City": City,
+            "Place": Place,
+            "Amenity": Amenity,
+            "Review": Review
         }
 
     prompt = '(hbnb) '
