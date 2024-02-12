@@ -70,7 +70,7 @@ class HBNBCommand(cmd.Cmd):
         else:
             instan = (eval(class_name)().id)
             print(instan)
-            instan.save()
+            storage.save()
 
     def do_show(self, args):
         """
