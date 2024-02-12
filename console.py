@@ -31,7 +31,7 @@ def parse(arg):
         retl = [i.strip(",") for i in lexer]
         retl.append(curly_braces.group())
         return retl
-    
+
 
 class HBNBCommand(cmd.Cmd):
     """Command line for the airbnb
@@ -171,7 +171,7 @@ class HBNBCommand(cmd.Cmd):
        <class>.update(<id>, <dictionary>)
         Update a class instance of a given id by adding or updating
         a given attribute key/value pair or dictionary."""
-        argl = parse(arg)
+        argl = parse(args)
         objdict = storage.all()
 
         if len(argl) == 0:
