@@ -2,7 +2,6 @@
 """
 Defines the Place class that inherits from BaseModel.
 """
-
 from models.base_model import BaseModel
 
 
