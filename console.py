@@ -93,21 +93,26 @@ class HBNBCommand(cmd.Cmd):
             print(storage_dict["{}.{}".format(args[0], args[1])])
 
     def do_destroy(self, args):
-        """Usage: destroy <class> <id> or <class>.destroy(<id>)
-        Delete a class instance of a given id."""
-        argl = args.split()
-        objdict = storage.all()
-        if len(argl) == 0:
+        """
+        Delete a specified instance.
+
+        Usage: destroy <class_name> <instance_id>
+        """
+
+        args = args.split()
+        if len(args) == 0:
             print("** class name missing **")
-        elif argl[0] not in HBNBCommand.__allw_cls:
+        elif args[0] not in HBNBCommand.__allw_cls:
             print("** class doesn't exist **")
-        elif len(argl) == 1:
+        elif len(args) != 2:
             print("** instance id missing **")
-        elif "{}.{}".format(argl[0], argl[1]) not in objdict.keys():
-            print("** no instance found **")
         else:
-            del objdict["{}.{}".format(argl[0], argl[1])]
-            storage.save()
+            for key, value in storage.all().items():
+                if args[1] == value.id:
+                    del storage.all()[key]
+                    storage.save()
+                    return
+            print("** no instance found **")
 
     def do_all(self, args):
         """
