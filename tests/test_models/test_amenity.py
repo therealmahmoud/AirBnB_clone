@@ -36,23 +36,23 @@ class TestAmenity_instantiation(unittest.TestCase):
         self.assertNotIn("name", am.__dict__)
 
     def test_TwoUniqueIds(self):
-        am1 = Amenity()
-        am2 = Amenity()
-        self.assertNotEqual(am1.id, am2.id)
+        amen1 = Amenity()
+        amen2 = Amenity()
+        self.assertNotEqual(amen1.id, amen2.id)
 
     def test_TwoDifferent_updated_at(self):
-        am1 = Amenity()
+        amen1 = Amenity()
         sleep(0.05)
-        am2 = Amenity()
-        self.assertLess(am1.updated_at, am2.updated_at)
+        amen2 = Amenity()
+        self.assertLess(amen1.updated_at, amen2.updated_at)
 
     def test_InstantiationNoneKwargs(self):
         with self.assertRaises(TypeError):
             Amenity(id=None, created_at=None, updated_at=None)
 
     def test_ArgumentsUnused(self):
-        am = Amenity(None)
-        self.assertNotIn(None, am.__dict__.values())
+        amen = Amenity(None)
+        self.assertNotIn(None, amen.__dict__.values())
 
 
 class TestAmenity_save(unittest.TestCase):
@@ -76,34 +76,34 @@ class TestAmenity_save(unittest.TestCase):
             pass
 
     def test_SaveUpdatesFile(self):
-        am = Amenity()
-        am.save()
-        amid = "Amenity." + am.id
+        amen = Amenity()
+        amen.save()
+        amid = "Amenity." + amen.id
         with open("file.json", "r") as f:
             self.assertIn(amid, f.read())
 
     def test_TwoSaves(self):
-        am = Amenity()
+        amen = Amenity()
         sleep(0.05)
-        first_updated_at = am.updated_at
-        am.save()
-        second_updated_at = am.updated_at
+        first_updated_at = amen.updated_at
+        amen.save()
+        second_updated_at = amen.updated_at
         self.assertLess(first_updated_at, second_updated_at)
         sleep(0.05)
-        am.save()
-        self.assertLess(second_updated_at, am.updated_at)
+        amen.save()
+        self.assertLess(second_updated_at, amen.updated_at)
 
     def test_OneSave(self):
-        am = Amenity()
+        amen = Amenity()
         sleep(0.05)
-        first_updated_at = am.updated_at
-        am.save()
-        self.assertLess(first_updated_at, am.updated_at)
+        first_updated_at = amen.updated_at
+        amen.save()
+        self.assertLess(first_updated_at, amen.updated_at)
 
     def test_SaveArguments(self):
-        am = Amenity()
+        amen = Amenity()
         with self.assertRaises(TypeError):
-            am.save(None)
+            amen.save(None)
 
 
 class TestAmenity_to_dict(unittest.TestCase):
@@ -113,27 +113,27 @@ class TestAmenity_to_dict(unittest.TestCase):
         self.assertTrue(dict, type(Amenity().to_dict()))
 
     def test_to_Dict_ContainsKeys(self):
-        am = Amenity()
-        self.assertIn("id", am.to_dict())
-        self.assertIn("created_at", am.to_dict())
-        self.assertIn("updated_at", am.to_dict())
-        self.assertIn("__class__", am.to_dict())
+        amen = Amenity()
+        self.assertIn("id", amen.to_dict())
+        self.assertIn("created_at", amen.to_dict())
+        self.assertIn("updated_at", amen.to_dict())
+        self.assertIn("__class__", amen.to_dict())
 
     def test_to_dict_ContainsAddedAttributes(self):
-        am = Amenity()
-        am.middle_name = "Holberton"
-        am.my_number = 98
-        self.assertEqual("Holberton", am.middle_name)
-        self.assertIn("my_number", am.to_dict())
+        amen = Amenity()
+        amen.middle_name = "Holberton"
+        amen.my_number = 98
+        self.assertEqual("Holberton", amen.middle_name)
+        self.assertIn("my_number", amen.to_dict())
 
     def test_to_dict_arguments(self):
-        am = Amenity()
+        amen = Amenity()
         with self.assertRaises(TypeError):
-            am.to_dict(None)
+            amen.to_dict(None)
 
     def test_Contrast_to_dict_DunderDict(self):
-        am = Amenity()
-        self.assertNotEqual(am.to_dict(), am.__dict__)
+        amen = Amenity()
+        self.assertNotEqual(amen.to_dict(), amen.__dict__)
 
 
 if __name__ == "__main__":
