@@ -2,7 +2,6 @@
 """
 Defines the User class that inherits from BaseModel.
 """
-
 from models.base_model import BaseModel
 
 
