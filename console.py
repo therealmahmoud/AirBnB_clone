@@ -69,8 +69,8 @@ class HBNBCommand(cmd.Cmd):
             print("** class doesn't exist **")
         else:
             instan = eval(class_name)()
-            instan.save()
             print(instan.id)
+            instan.save()
 
     def do_show(self, args):
         """
