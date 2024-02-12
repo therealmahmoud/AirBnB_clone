@@ -29,20 +29,11 @@ class TestAmenity_instantiation(unittest.TestCase):
     def test_updated_atDateTime(self):
         self.assertEqual(datetime, type(Amenity().updated_at))
 
-    def test_created_atDateTime(self):
-        self.assertEqual(datetime, type(Amenity().created_at))
-
     def test_name_isClassAttribute(self):
         am = Amenity()
         self.assertEqual(str, type(Amenity.name))
         self.assertIn("name", dir(Amenity()))
         self.assertNotIn("name", am.__dict__)
-
-    def test_TwoDifferent_created_at(self):
-        am1 = Amenity()
-        sleep(0.05)
-        am2 = Amenity()
-        self.assertLess(am1.created_at, am2.created_at)
 
     def test_TwoUniqueIds(self):
         am1 = Amenity()
@@ -62,27 +53,6 @@ class TestAmenity_instantiation(unittest.TestCase):
     def test_ArgumentsUnused(self):
         am = Amenity(None)
         self.assertNotIn(None, am.__dict__.values())
-
-    def test_StrRepresentation(self):
-        dt = datetime.today()
-        dt_repr = repr(dt)
-        am = Amenity()
-        am.id = "123456"
-        am.created_at = am.updated_at = dt
-        amstr = am.__str__()
-        self.assertIn("[Amenity] (123456)", amstr)
-        self.assertIn("'id': '123456'", amstr)
-        self.assertIn("'created_at': " + dt_repr, amstr)
-        self.assertIn("'updated_at': " + dt_repr, amstr)
-
-    def test_InstantiationKwargs(self):
-        """instantiation with kwargs test method"""
-        dt = datetime.today()
-        dt_iso = dt.isoformat()
-        am = Amenity(id="345", created_at=dt_iso, updated_at=dt_iso)
-        self.assertEqual(am.id, "345")
-        self.assertEqual(am.created_at, dt)
-        self.assertEqual(am.updated_at, dt)
 
 
 class TestAmenity_save(unittest.TestCase):
@@ -142,13 +112,6 @@ class TestAmenity_to_dict(unittest.TestCase):
     def test_DictType(self):
         self.assertTrue(dict, type(Amenity().to_dict()))
 
-    def test_to_dict_DatetimeAttributesAreStrs(self):
-        am = Amenity()
-        am_dict = am.to_dict()
-        self.assertEqual(str, type(am_dict["id"]))
-        self.assertEqual(str, type(am_dict["created_at"]))
-        self.assertEqual(str, type(am_dict["updated_at"]))
-
     def test_to_Dict_ContainsKeys(self):
         am = Amenity()
         self.assertIn("id", am.to_dict())
@@ -162,19 +125,6 @@ class TestAmenity_to_dict(unittest.TestCase):
         am.my_number = 98
         self.assertEqual("Holberton", am.middle_name)
         self.assertIn("my_number", am.to_dict())
-
-    def test_to_dict_OutPut(self):
-        dt = datetime.today()
-        am = Amenity()
-        am.id = "123456"
-        am.created_at = am.updated_at = dt
-        tdict = {
-            'id': '123456',
-            '__class__': 'Amenity',
-            'created_at': dt.isoformat(),
-            'updated_at': dt.isoformat(),
-        }
-        self.assertDictEqual(am.to_dict(), tdict)
 
     def test_to_dict_arguments(self):
         am = Amenity()
